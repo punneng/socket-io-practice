@@ -1,3 +1,6 @@
+// NOTE: Since this practice focus on socketio so the test cases will not be focused
+// on commands
+
 const assert = require('assert')
 const Sinon  = require('sinon')
 
@@ -28,7 +31,7 @@ describe('Command', () => {
   describe('setNickname', () => {
     const io = {}
     const socket = {}
-    
+
     it('should return a function to set _nickname to socket', () => {
       const setNickname = Command.getCommandFn('@command setNickname neng')
       setNickname(io, socket)
