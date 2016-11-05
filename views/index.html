@@ -26,32 +26,6 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="/client.js"></script>
-    <script>
-      $('form').submit(function(){
-        var message = $('#m').val();
-        window.API.chat(message, (message) => {
-          $('#chatbox').append($('<li>').text(message));
-        });
-        $('#m').val('');
-        return false;
-      });
-
-      window.API.onRecieveMessage((message) => {
-        $('#chatbox').append($('<li>').text(message));
-      })
-
-      $('#m').keypress(function() {
-        window.API.onTyping()
-      })
-
-      window.API.onRecieveTyping((nickname) => {
-        $('li#user-is-typing').show();
-        $('li#user-is-typing').text('[' + nickname + '] is typing');
-        setTimeout(() => {
-          $('li#user-is-typing').hide();
-        }, 3000)
-      })
-    </script>
+    <script src="/bundle/index.js"></script>
   </body>
 </html>

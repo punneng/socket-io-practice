@@ -4,8 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test",
-    "start": "nodemon --debug server.js"
+    "test": "mocha test",
+    "build-js": "browserify app/* -o bundle/index.js",
+    "start": "gulp dev"
   },
   "repository": {
     "type": "git",
@@ -14,11 +15,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "browserify": "^13.1.1",
     "express": "^4.14.0",
     "lodash": "^4.16.4",
     "socket.io": "^1.5.1"
   },
   "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-nodemon": "^2.2.1",
     "mocha": "^3.1.2",
     "nodemon": "^1.11.0",
     "sinon": "^1.17.6"
