@@ -16,7 +16,6 @@ module.exports = () => {
   })
 
   io.on('connection', (socket) => {
-    console.log(socket.id, 'connected')
     socket.broadcast.emit('chat message', 'a user connected')
 
     socket.on('chat message', (message) => {
@@ -31,7 +30,6 @@ module.exports = () => {
           return
         }
       } else {
-        console.log('emit message from ', socket.id, message)
         socket.broadcast.emit('chat message', `[${getNickname(socket)}] ${message}`)
       }
     })
@@ -40,7 +38,7 @@ module.exports = () => {
       socket.broadcast.emit('chat typing', getNickname(socket))
     })
 
-    socket.on('disconnect', () => {
+    socket.on('disconnect', (callback) => {
       socket.broadcast.emit('chat message', 'a user disconnected')
     })
   })

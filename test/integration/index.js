@@ -14,30 +14,44 @@ describe('chat message', () => {
   let client1
   let client2
 
-  beforeEach(done => {
+  before(done => {
     server = Server()
-    client1 = Client(io('http://localhost:3000', ioOptions))
-    client2 = Client(io('http://localhost:3000', ioOptions))
-
     done()
   })
-  afterEach(done => {
-    server.close()
-    client1.disconnect()
-    client2.disconnect()
+
+  beforeEach(done => {
+    client1 = Client(io('http://localhost:3000', ioOptions))
+    client2 = Client(io('http://localhost:3000', ioOptions))
     done()
+  })
+
+  afterEach(done => {
+    client1.disconnect(() => {})
+    client2.disconnect(done)
+  })
+
+  after(done => {
+    server.close(done)
   })
 
   it('should send messages to client2 when client1 emit event', done => {
-
-    client2.onRecieveMessage((message) => {
+    client2.onRecieveMessage(message => {
       assert.equal(message, '[Anonymous] helloworld')
       done()
     })
 
-
-    client1.chat('helloworld', (message) => { })
-
-
+    client1.chat('helloworld', message => { })
   })
+
+  it('should send messages to client2 when client1 emit event with name', done => {
+
+    client1.chat('@command setNickname neng', message => {})
+    client2.onRecieveMessage(message => {
+
+      assert.equal(message, '[neng] helloworld')
+      done()
+    })
+    client1.chat('helloworld', message => { })
+  })
+
 })

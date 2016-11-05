@@ -1,4 +1,6 @@
 function Client(io) {
+  this.socket = io
+
   this.chat = (message, callback) => {
     this.socket.emit('chat message', message)
     callback(message)
@@ -20,12 +22,12 @@ function Client(io) {
     })
   }
 
-  this.disconnect = () => {
-    this.socket.disconnect()
-  }
+  this.disconnect = (callback) => {
 
-  this.socket = io
-  return this
+    this.socket.disconnect()
+    // TODO: find how to exectue a callback function after this.socket.disconnect()
+    if (callback) setTimeout(callback, 1900)
+  }
 }
 
 
